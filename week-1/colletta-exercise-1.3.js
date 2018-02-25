@@ -8,10 +8,6 @@
 ; parsed out into sections.
 ;===========================================
 */ 
-var header = require('../header.js');
-var headerMsg = header.display("Natasha", "Colletta", "Exercise 1.3");
-console.log(headerMsg + "\n");
-
 var url = require('url');
 
 var parsedURL = url.parse('https://www.reddit.com/subreddit?cats');
