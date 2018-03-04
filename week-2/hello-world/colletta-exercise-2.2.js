@@ -4,15 +4,14 @@ var http = require('http');
 
 var app = express();
 
-app.use(function(req, res)
-{
-    console.log('In comes a request to: %s', req.url);
+app.use(function(request, response){
+    console.log('In comes a request to: %s', request.url);
 
-    res.end('Hello World\n');
-})
+    response.end('Hello World\n');
+});
 
 
 http.createServer(app).listen(8080, function()
 {
-    console.log('Applicatoin started on part %s', 8080);
-})
+    console.log('Application started on port %s', 8080);
+});
