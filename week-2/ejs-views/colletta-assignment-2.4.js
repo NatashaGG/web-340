@@ -14,7 +14,6 @@ app.set("view engine", "ejs");
 
 app.get("/", function(req, res){
     res.render("index", {
-        message: "Welcome to the Colletta's homepage!",
         firstName: "Billy",
         lastName: "Bob Joe",
         address: "billybobjoe@gmail.com"
