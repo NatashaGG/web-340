@@ -1,0 +1,9 @@
+{
+    "name": "if-else-render",
+    "author": "Natasha Colletta",
+    "private": true,
+    "dependencies": {
+        "ejs": "^2.5.7",
+        "express": "^4.16.3"
+    }
+}
