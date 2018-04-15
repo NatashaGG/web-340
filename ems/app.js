@@ -12,7 +12,7 @@ var cookieParser = require('cookie-parser');
 var csrf = require('csurf');
 
 // mLab connection
-var mongoDB = "mongodb://admin:password@ds117759.mlab.com:17759/ems";
+var mongoDB = "mongodb://admin1:Password@ds117759.mlab.com:17759/ems";
 mongoose.connect(mongoDB, {
 });
 mongoose.Promise = global.Promise;
