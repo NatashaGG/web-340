@@ -10,10 +10,6 @@ var helmet = require('helmet');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-oarser');
 var csrf = require('csurf');
-var app = express();
-
-//setup csrf protection
-var csrfProtection = csrf({cookie:true});
 
 // mLab connection
 var mongoDB = "mongodb://admin:password@ds117759.mlab.com:17759/ems";
@@ -27,6 +23,9 @@ db.once("open", function() {
     console.log("Application connected to mLab MongoDB instance");
 });
 
+//setup csrf protection
+var csrfProtection = csrf({cookie:true});
+
 // initialize the express application
 var app = express();
 
@@ -36,8 +35,9 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(cookieParser());
+app.use(helmet.xssFilter());
 app.use(csrfProtection);
-app.use(function(req, res, next){
+app.use(function(req, res, next) {
     var token = requrest.csrfToken();
     res.cookie('XSRF-TOKEN', token);
     res.locals.csrfToken = token;
@@ -47,37 +47,77 @@ app.use(function(req, res, next){
 //set statements
 app.set("views", path.resolve(__dirname, "views"));
 app.set("view engine", "ejs");
+app.set("port", process.env.PORT || 8080);
 
 //routing
 app.get("/", function (req, res) {
     res.render("index", {
-        title: "Employees"
+        title: "Home Page"
     });
 });
-app.post('/process', function(req, res){
+
+app.get('/new', function (req, res) {
+    res.render('new', {
+        title: 'New Employee'
+    });
+});
+
+app.post('/process', function(req, res) {
      // console.log(request.body.txtName);
     if (!request.body.txtName) {
         response.status(400).send("Entries must have a name");
-    return;
+        return;
     }
+
     // get the request's form data
     var employeeSchema = request.body.txtName;
     console.log(employeeSchema);
     
-    // create a fruit model
+    // create a employee model
     var employee = new Employee({
-    name: employeeSchema
+        name: employeeSchema
     });
     
     // save
     employee.save(function (error) {
-    if (error) throw error;
-    console.log(employeeSchema + " saved successfully!");
+        if (error) throw error;
+        
+        console.log(employeeSchema + " saved successfully!");
     });
     
     res.redirect('/');
 });
 
+app.get("/list", function(req, res) {
+    Employee.find({}, function(error, employees) {
+        if (error) throw error;
+
+        response.render("list", {
+           title: "Employee List",
+           employees: employees
+        });
+    });
+});
+
+app.get("/view/:queryName", function (request, response) {
+    var queryName = request.params.queryName;
+
+    Employee.find({'name': queryName}, function(error, employees) {
+        if (error) throw error;
+
+        console.log(employees);
+
+        if (employees.length > 0) {
+            response.render("view", {
+                title: "Employee Record",
+                employee: employees
+            })
+        }
+        else {
+            response.redirect("/list")
+        }
+    });
+});
 
 //create and start the Node server
 http.createServer(app).listen(8080, function(){
