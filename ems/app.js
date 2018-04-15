@@ -37,7 +37,7 @@ app.use(cookieParser());
 app.use(helmet.xssFilter());
 app.use(csrfProtection);
 app.use(function(req, res, next) {
-    var token = requrest.csrfToken();
+    var token = req.csrfToken();
     res.cookie('XSRF-TOKEN', token);
     res.locals.csrfToken = token;
     next();
