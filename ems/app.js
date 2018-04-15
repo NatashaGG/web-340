@@ -55,15 +55,29 @@ app.get("/", function (req, res) {
     });
 });
 app.post('/process', function(req, res){
-    console.log(req.body.txtName);
+     // console.log(request.body.txtName);
+    if (!request.body.txtName) {
+        response.status(400).send("Entries must have a name");
+    return;
+    }
+    // get the request's form data
+    var employeeSchema = request.body.txtName;
+    console.log(employeeSchema);
+    
+    // create a fruit model
+    var employee = new Employee({
+    name: employeeSchema
+    });
+    
+    // save
+    employee.save(function (error) {
+    if (error) throw error;
+    console.log(employeeSchema + " saved successfully!");
+    });
+    
     res.redirect('/');
 });
 
-// model
-var employee = new Employee({
-    firstName: "John",
-    lastName: "Doe"
-});
 
 //create and start the Node server
 http.createServer(app).listen(8080, function(){
