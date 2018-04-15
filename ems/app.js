@@ -8,7 +8,7 @@ var Employee = require("./models/employee");
 var logger = require('morgan');
 var helmet = require('helmet');
 var bodyParser = require('body-parser');
-var cookieParser = require('cookie-oarser');
+var cookieParser = require('cookie-parser');
 var csrf = require('csurf');
 
 // mLab connection
