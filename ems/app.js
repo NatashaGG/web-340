@@ -14,7 +14,6 @@ var csrf = require('csurf');
 // mLab connection
 var mongoDB = "mongodb://admin:password@ds117759.mlab.com:17759/ems";
 mongoose.connect(mongoDB, {
-    useMongoClient: true
 });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
