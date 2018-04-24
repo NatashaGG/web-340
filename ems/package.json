@@ -12,5 +12,11 @@
         "mongodb": "^3.0.7",
         "mongoose": "^5.0.13",
         "morgan": "^1.9.0"
+    },
+    "scripts": {
+        "start": "node app.js"
+    },
+    "engines": {
+        "node": "8.9.1"
     }
 }
