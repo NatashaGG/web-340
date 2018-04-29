@@ -15,6 +15,6 @@ app.get("/customer/:id", function(req, res){
     });
 });
 
-http.createServer(app).listen.listen(3000, function(){
+http.createServer(app).listen(3000, function(){
     console.log("Application started on port 3000");
 });
